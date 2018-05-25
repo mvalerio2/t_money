@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Cotação</title>
+        <meta charset="UTF-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#" th:href="@{/registration}">Não tem conta? Registre-se</a></li>
+                    <li><a href="#" th:href="@{/login}">Login</a></li>
+                </ul>
+            </div><!-- /.container-fluid -->
+        </nav>
+
+        <center>
+            <div style="height:233px;margin-top:89px">
+                <p style="font-size: 50px">Cotação Atual do BitCoin R$:</p>
+                <br/>
+                <p style="font-size: 90px" class="cotacao"/>
+
+            </div>
+        </center>
+
+        <script>
+            $(document).ready(function () {
+                $.ajax({
+                    url: "https://www.mercadobitcoin.net/api/BTC/ticker/"
+                }).then(function (data) {
+                    console.log(data.ticker.last);
+                    var valor = data.ticker.last;
+                    $('.cotacao').append(parseFloat(valor).toFixed(2));
+                });
+            });
+        </script>
+    </body>
+</html>
