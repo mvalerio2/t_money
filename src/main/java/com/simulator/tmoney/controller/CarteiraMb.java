@@ -117,7 +117,7 @@ public class CarteiraMb {
         }else{
             ht.setValorAnteriorCarteira(carteira.getSaldo());
         }
-        if(carteira.getSaldo() == null){
+        if(carteira.getSaldoCriptomoeda() == null){
             ht.setQuantidadeAnteriorCriptomoeda(0.0);
         }else{
             ht.setQuantidadeAnteriorCriptomoeda(carteira.getSaldoCriptomoeda());
