@@ -112,8 +112,16 @@ public class CarteiraMb {
         Carteira carteira = carteiraService.findOne(id);
         
         HistoricoTransacao ht = new HistoricoTransacao();
-        ht.setValorAnteriorCarteira(carteira.getSaldo());
-        ht.setQuantidadeAnteriorCriptomoeda(carteira.getSaldoCriptomoeda());
+        if(carteira.getSaldo() == null){
+            ht.setValorAnteriorCarteira(0.0);
+        }else{
+            ht.setValorAnteriorCarteira(carteira.getSaldo());
+        }
+        if(carteira.getSaldo() == null){
+            ht.setQuantidadeAnteriorCriptomoeda(0.0);
+        }else{
+            ht.setQuantidadeAnteriorCriptomoeda(carteira.getSaldoCriptomoeda());
+        }
 
         List<Configuracao> list = configuracaoService.findAll();
         if (list.isEmpty()) {
