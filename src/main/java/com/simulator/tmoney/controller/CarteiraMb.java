@@ -152,12 +152,6 @@ public class CarteiraMb {
     @RequestMapping(value = "/admin/usuario", method = RequestMethod.GET)
     public ModelAndView verUsuario(Carteira carteira) {
         ModelAndView modelAndView = new ModelAndView();
-        System.out.println(" ");
-        System.out.println(" ");
-        System.out.println(" ");
-        System.out.println(" ");
-        System.out.println(" Carregando tela");
-        System.out.println(carteira.getId().toString());
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Usuario usuario = usuarioService.findByEmail(auth.getName());
         modelAndView.addObject("user", usuario);
@@ -170,11 +164,6 @@ public class CarteiraMb {
     @GetMapping("/admin/usuario/{id}")
     public ModelAndView view(@PathVariable("id") Integer id) {
         Carteira c = carteiraService.findOne(id);
-        System.out.println(" ");
-        System.out.println(" ");
-        System.out.println(" ");
-        System.out.println(" Enviando a carteira");
-        System.out.println(c.getId().toString());
         return verUsuario(c);
     }
 }

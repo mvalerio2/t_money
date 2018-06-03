@@ -68,8 +68,10 @@ public class UsuarioMb {
     @GetMapping("/user/carteira/deletar/{id}")
     public ModelAndView delete(@PathVariable("id") Integer id) {
 
-        carteiraService.delete(id);
-
+        List<HistoricoTransacao> list = historicoTransacaoService.findByCarteiraId(carteiraService.findOne(id));
+        if(list.isEmpty()){
+                carteiraService.delete(id);
+        }
         return listarCarteiras();
     }
 
