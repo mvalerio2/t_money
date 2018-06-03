@@ -21,18 +21,17 @@
             <table class="display" cellspacing="0" width="100%" id="carteiras">
                 <thead>
                     <tr>
-                        <th></th>
                         <th>Usuário</th>
                         <th>Criptomoeda</th>
                         <th>Saldo em R$:</th>
                         <th>Quantidade de Criptomoeda</th>
                         <th>Ativo</th>
                         <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="carteira : ${carteiras}">
-                        <td></td>
                         <td th:text="${carteira.usuarioId.nome}"></td>
                         <td th:text="${carteira.criptomoedaId.nome}"></td>
                         <td th:text="${carteira.saldo}"></td>
@@ -40,7 +39,12 @@
                         <td th:text="${carteira.ativo}"></td>
                         <td>
                             <div >
-                                <a class="btn btn-primary btn-xs" th:href="@{/admin/usuario/{id}(id=${carteira.id})}" >Ver Carteira</a>
+                                <a th:if="${carteira.ativo} == true" class="btn btn-danger btn-xs" th:href="@{/admin/carteira/inativar/{id}(id=${carteira.id})}">Inativar Carteira</a>
+                                <a th:if="${carteira.ativo} == false" class="btn btn-primary btn-xs" th:href="@{/admin/carteira/ativar/{id}(id=${carteira.id})}">Ativar Carteira</a>
+                            </div>
+                        </td><td>
+                            <div >
+                                <a class="btn btn-danger btn-xs" th:href="@{/admin/carteira/reiniciar/{id}(id=${carteira.id})}">Reiniciar Carteira</a>
                             </div>
                         </td>
                     </tr>

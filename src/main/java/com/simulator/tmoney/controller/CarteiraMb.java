@@ -94,7 +94,7 @@ public class CarteiraMb {
         carteira.setAtivo(Boolean.FALSE);
         carteiraService.update(carteira);
 
-        return view(carteira.getUsuarioId().getId());
+        return carteiras();
     }
 
     @GetMapping("/admin/carteira/ativar/{id}")
@@ -104,7 +104,7 @@ public class CarteiraMb {
         carteira.setAtivo(Boolean.TRUE);
         carteiraService.update(carteira);
 
-        return view(carteira.getUsuarioId().getId());
+        return carteiras();
     }
 
     @GetMapping("/admin/carteira/reiniciar/{id}")
@@ -139,7 +139,7 @@ public class CarteiraMb {
         ht.setQuantidadeAtualCriptomoeda(carteira.getSaldoCriptomoeda());
         historicoTransacaoService.save(ht);
 
-        return view(carteira.getUsuarioId().getId());
+        return carteiras();
     }
     
     
