@@ -32,6 +32,11 @@ public class UsuarioMb {
     @Autowired
     private HistoricoTransacaoService historicoTransacaoService;
 
+    /*
+    Metodo cria a ligação com a view e manda os objetos:
+     - Usuario
+     - Role do usuario logado
+    */
     @RequestMapping(value = "/user/editarUsuario", method = RequestMethod.GET)
     public ModelAndView editarUsuario() {
         ModelAndView modelAndView = new ModelAndView();
@@ -43,6 +48,9 @@ public class UsuarioMb {
         return modelAndView;
     }
 
+    /*
+    Metodo recebe o objeto usuario e salva as alterações feitas
+     */
     @PostMapping("/user/editarUsuario/save")
     public ModelAndView save(@Valid Usuario usuario, BindingResult result) {
         Usuario userOld = usuarioService.findOne(usuario.getId());
@@ -54,6 +62,11 @@ public class UsuarioMb {
         return editarUsuario();
     }
 
+    /*
+    Metodo cria a ligação com a view e manda os objetos:
+     - Lista de carteiras do usuario
+     - Role do usuario logado
+    */
     @RequestMapping(value = "/user/listarCarteiras", method = RequestMethod.GET)
     public ModelAndView listarCarteiras() {
         ModelAndView modelAndView = new ModelAndView();
@@ -65,6 +78,9 @@ public class UsuarioMb {
         return modelAndView;
     }
 
+    /*
+    Metodo recebe o id da carteira e se não tiver nenhum historico de transação ele deleta a carteira
+     */
     @GetMapping("/user/carteira/deletar/{id}")
     public ModelAndView delete(@PathVariable("id") Integer id) {
 
@@ -75,6 +91,14 @@ public class UsuarioMb {
         return listarCarteiras();
     }
 
+
+    /*
+    Metodo cria a ligação com a view, recebe o objeto carteira e manda os objetos:
+     - Carteira
+     - Lista de historico de transações da carteira
+     - Usuario
+     - Role do usuario logado
+    */
     @RequestMapping(value = "/user/historicoTransacoesUsuario", method = RequestMethod.GET)
     public ModelAndView verHistoricoTransacoes(Carteira carteira) {
         ModelAndView modelAndView = new ModelAndView();
@@ -89,12 +113,18 @@ public class UsuarioMb {
         return modelAndView;
     }
 
+    /*
+    Metodo recebe o id da carteira, carrega ela e manda para o metodo verHistoricoTransacoes
+     */
     @GetMapping("/user/carteira/historico/{id}")
     public ModelAndView view(@PathVariable("id") Integer id) {
 
         return verHistoricoTransacoes(carteiraService.findOne(id));
     }
 
+    /*
+    Metodo que chama listarCarteiras para voltar a tela que lista as carteiras do usuario
+     */
     @RequestMapping(value = "/user/voltarCarteiras", method = RequestMethod.GET)
     public ModelAndView voltarLista() {
 

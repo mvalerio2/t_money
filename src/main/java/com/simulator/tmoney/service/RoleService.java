@@ -12,18 +12,30 @@ public class RoleService {
     @Autowired
     private RoleRepository roleRepository;
 
+    /*
+    Lista as roles do sistema
+     */
     public List<Role> findAll() {
         return roleRepository.findAll();
     }
 
+    /*
+    Carrega uma role pelo id
+     */
     public Role findOne(Integer id) {
         return roleRepository.findOne(id);
     }
 
+    /*
+    Salva a role
+     */
     public Role save(Role role) {
         return roleRepository.save(role);
     }
 
+    /*
+    Atualiza a role
+     */
     public Role update(Role role) {
         return roleRepository.saveAndFlush(role);
     }

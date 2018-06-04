@@ -25,6 +25,12 @@ public class ConfiguracaoMb {
     @Autowired
     private ConfiguracaoService configuracaoService;
 
+    /*
+    Metodo cria a ligação com a view e manda os objetos:
+   - Configuração, se já existe uma configuração cadastrada no banco ele manda a do banco
+        se não manda um objeto novo de Configuração
+   - Role do usuario logado
+    */
     @RequestMapping(value = "/admin/configuracao", method = RequestMethod.GET)
     public ModelAndView criarConfiguracao() {
         ModelAndView modelAndView = new ModelAndView();
@@ -41,6 +47,9 @@ public class ConfiguracaoMb {
         return modelAndView;
     }
 
+    /*
+    Metodo recebe o objeto de configuração e salva no banco
+     */
     @PostMapping("/admin/configuracao/save")
     public ModelAndView save(@Valid Configuracao configuracao, BindingResult result) {
 

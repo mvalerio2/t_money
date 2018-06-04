@@ -41,6 +41,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(bCryptPasswordEncoder);
     }
 
+    /*
+    Metodo de configuração do nível de segurança,
+     esse metodo valida o login e controla as pagina que cada usuario pode acessar
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
@@ -67,6 +71,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
     }
 
+    /*
+    Metodo recebe o websecurity e da a permissão total para:
+     -/resources/**
+     -/static/**
+     -/css/**
+     -/js/**
+     -/images/**
+     */
     @Override
     public void configure(WebSecurity web) throws Exception {
         web

@@ -12,18 +12,30 @@ public class ConfiguracaoService {
     @Autowired
     private ConfiguracaoRepository configuracaoRepository;
 
+    /*
+    Lista as configurações do sistema
+     */
     public List<Configuracao> findAll() {
         return configuracaoRepository.findAll();
     }
 
+    /*
+    Carega uma configuração apartir do id
+     */
     public Configuracao findOne(Integer id) {
         return configuracaoRepository.findOne(id);
     }
 
+    /*
+    Salva a configuração no banco
+     */
     public Configuracao save(Configuracao configuracao) {
         return configuracaoRepository.save(configuracao);
     }
 
+    /*
+    Atualiza a configuração
+     */
     public Configuracao update(Configuracao configuracao) {
         return configuracaoRepository.saveAndFlush(configuracao);
     }

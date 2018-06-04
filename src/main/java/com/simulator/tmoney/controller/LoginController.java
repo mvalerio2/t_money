@@ -18,6 +18,9 @@ public class LoginController {
     @Autowired
     private UsuarioService usuarioService;
 
+    /*
+    Metodo cria a ligação com a view
+    */
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
     public ModelAndView login() {
         ModelAndView modelAndView = new ModelAndView();
@@ -25,6 +28,9 @@ public class LoginController {
         return modelAndView;
     }
 
+    /*
+    Metodo cria a ligação com a view
+    */
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public ModelAndView registration() {
         ModelAndView modelAndView = new ModelAndView();
@@ -34,6 +40,9 @@ public class LoginController {
         return modelAndView;
     }
 
+    /*
+    Metodo cria a ligação com a view e salva o usuario no banco
+    */
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public ModelAndView createNewUser(@Valid Usuario usuario, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
@@ -55,6 +64,11 @@ public class LoginController {
         return modelAndView;
     }
 
+    /*
+    Metodo cria a ligação com a view e manda os objetos:
+    - Objeto Usuario
+    - Role do usuario logado
+    */
     @RequestMapping(value = "/user/home", method = RequestMethod.GET)
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();

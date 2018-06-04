@@ -46,7 +46,12 @@ public class CarteiraMb {
     @Autowired
     private HistoricoTransacaoService historicoTransacaoService;
 
-
+    /*
+    Esse metodo cria a ligação com a view e manda os objetos:
+    - Lista das Criptomoedas
+    - Um objeto novo da Carteira
+    - Role do usuario logado
+    */
     @RequestMapping(value = "/user/criarCarteira", method = RequestMethod.GET)
     public ModelAndView criarCarteira() {
         ModelAndView modelAndView = new ModelAndView();
@@ -58,7 +63,10 @@ public class CarteiraMb {
         modelAndView.setViewName("user/criarCarteira");
         return modelAndView;
     }
-
+    /*
+    Metodo recebe a carteira da view, verifica no banco se exite um valor inicial para o saldo
+     da carteira e salva no banco
+    */
     @PostMapping("/user/criarCarteira/save")
     public ModelAndView save(@Valid Carteira carteira, BindingResult result) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -76,6 +84,11 @@ public class CarteiraMb {
         return criarCarteira();
     }
 
+    /*
+    Metodo cria a ligação com a view e manda os objetos:
+    - Lista de todas as carteiras cadastradas
+    - Role do usuario logado
+     */
     @RequestMapping(value = "/admin/carteiras", method = RequestMethod.GET)
     public ModelAndView carteiras() {
         ModelAndView modelAndView = new ModelAndView();
@@ -87,6 +100,11 @@ public class CarteiraMb {
         return modelAndView;
     }
 
+    /*
+    Metodo recebe o id da carteira, inativa ela no sistema
+    e chama o metodo carteiras() para atualizar a tela que
+    lista as carteiras
+     */
     @GetMapping("/admin/carteira/inativar/{id}")
     public ModelAndView inativar(@PathVariable("id") Integer id) {
 
@@ -97,6 +115,11 @@ public class CarteiraMb {
         return carteiras();
     }
 
+    /*
+    Metodo recebe o id da carteira, ativa ela no sistema
+    e chama o metodo carteiras() para atualizar a tela que
+    lista as carteiras
+     */
     @GetMapping("/admin/carteira/ativar/{id}")
     public ModelAndView ativar(@PathVariable("id") Integer id) {
 
@@ -107,6 +130,11 @@ public class CarteiraMb {
         return carteiras();
     }
 
+    /*
+    Metodo recebe o id da carteira, reinicia o saldo dela
+    e chama o metodo carteiras() para atualizar a tela que
+    lista as carteiras
+     */
     @GetMapping("/admin/carteira/reiniciar/{id}")
     public ModelAndView reiniciar(@PathVariable("id") Integer id) {
         Carteira carteira = carteiraService.findOne(id);
@@ -148,7 +176,10 @@ public class CarteiraMb {
         
         return carteiras();
     }
-    
+
+    /*
+
+     */
     @RequestMapping(value = "/admin/usuario", method = RequestMethod.GET)
     public ModelAndView verUsuario(Carteira carteira) {
         ModelAndView modelAndView = new ModelAndView();
