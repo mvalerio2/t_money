@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>Listar Carteiras dos Usuários</title>
+        <meta charset="UTF-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet"></link>
+    </head>
+
+    <body>
+        <div th:replace="fragments/header :: header">Header</div>
+        <div class="container">
+            <h2>Listar Carteiras dos Usuários</h2>
+            <table class="display" cellspacing="0" width="100%" id="carteiras">
+                <thead>
+                    <tr>
+                        <th>Usuário</th>
+                        <th>Criptomoeda</th>
+                        <th>Saldo em R$:</th>
+                        <th>Quantidade de Criptomoeda</th>
+                        <th>Ativo</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="carteira : ${carteiras}">
+                        <td th:text="${carteira.usuarioId.nome}"></td>
+                        <td th:text="${carteira.criptomoedaId.nome}"></td>
+                        <td th:text="${carteira.saldo}"></td>
+                        <td th:text="${carteira.saldoCriptomoeda}"></td>
+                        <td th:text="${carteira.ativo}"></td>
+                        <td>
+                            <div >
+                                <a th:if="${carteira.ativo} == true" class="btn btn-danger btn-xs" th:href="@{/admin/carteira/inativar/{id}(id=${carteira.id})}">Inativar Carteira</a>
+                                <a th:if="${carteira.ativo} == false" class="btn btn-primary btn-xs" th:href="@{/admin/carteira/ativar/{id}(id=${carteira.id})}">Ativar Carteira</a>
+                            </div>
+                        </td><td>
+                            <div >
+                                <a class="btn btn-danger btn-xs" th:href="@{/admin/carteira/reiniciar/{id}(id=${carteira.id})}">Reiniciar Carteira</a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#carteiras').DataTable({
+                    "order": [[1, "desc"]],
+                    "language": {
+                        "sEmptyTable": "Nenhum registro encontrado",
+                        "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                        "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                        "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                        "sInfoPostFix": "",
+                        "sInfoThousands": ".",
+                        "sLengthMenu": "_MENU_ resultados por página",
+                        "sLoadingRecords": "Carregando...",
+                        "sProcessing": "Processando...",
+                        "sZeroRecords": "Nenhum registro encontrado",
+                        "sSearch": "Pesquisar",
+                        "oPaginate": {
+                            "sNext": "Próximo",
+                            "sPrevious": "Anterior",
+                            "sFirst": "Primeiro",
+                            "sLast": "Último"
+                        },
+                        "oAria": {
+                            "sSortAscending": ": Ordenar colunas de forma ascendente",
+                            "sSortDescending": ": Ordenar colunas de forma descendente"
+                        },
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

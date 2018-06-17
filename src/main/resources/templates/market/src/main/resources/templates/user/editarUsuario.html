@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>Editar Usuário</title>
+        <meta charset="UTF-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+
+    <body>
+        <div th:replace="fragments/header :: header">Header</div>
+        <div class="container">
+            <h2>Editar Usuário</h2>
+            <form class="form-horizontal" th:object="${user}" th:action="@{/user/editarUsuario/save}" method="POST">
+                <div class="form-group">
+                    <div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
+                        <div th:each="detailedError : ${#fields.detailedErrors()}">
+                            <span th:text="${detailedError.message}"></span>
+                        </div>
+                    </div>
+                </div>                    
+                <div class="form-group">                                                          
+                    <div class="col-sm-10" th:classappend="${#fields.hasErrors('nome')}? 'has-error'">
+                        <input type="hidden" class="form-control input-sm" id="id" th:field="*{id}"/>
+                        <br/>
+                        <label>Nome:</label>
+                        <input type="text" class="form-control input-sm" th:field="*{nome}" autofocus="autofocus" placeholder="Informe o nome" maxlength="100"/>
+                        <br/>
+                        <label>Email:</label>
+                        <input type="email" class="form-control input-sm" th:field="*{email}" autofocus="autofocus" placeholder="Informe o email" maxlength="255"/>
+                        <br/>
+                        <label>Senha:</label>
+                        <input required="true" type="password" class="form-control input-sm" th:field="*{senha}" autofocus="autofocus" placeholder="Informe a senha" maxlength="255"/>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Salvar</button>
+                <a th:href="@{/user/home}" class="btn btn-danger">Cancelar</a>
+            </form>
+        </div>
+    </body>
+</html>

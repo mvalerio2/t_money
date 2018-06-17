@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>Comprar</title>
+        <meta charset="UTF-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+
+    <body>
+        <div th:replace="fragments/header :: header">Header</div>
+        <div class="container">
+            <h2>Venda de Criptomoeda</h2>
+            <form class="form-horizontal" th:object="${ordem}" th:action="@{/market/vender/save}" method="POST">
+                <div class="form-group">
+                    <div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
+                        <div th:each="detailedError : ${#fields.detailedErrors()}">
+                            <span th:text="${detailedError.message}"></span>
+                        </div>
+                    </div>
+                </div>                    
+                <div class="form-group">                                                          
+                    <div class="col-sm-10">
+                        <label>Carteira</label>
+		                <select class="form-control" th:field="*{carteiraId}" required="required">
+		                    <option th:each="carteira : ${carteiras}" th:value="${carteira.id}"
+		                     th:text="${carteira.criptomoedaId.sigla} + ' | Saldo em ' + ${carteira.criptomoedaId.nome} + ' ' + ${carteira.saldoCriptomoeda}"></option>
+		                </select>
+                        <br/>
+                        <label>Cotação</label>
+                        <input required="true" type="number" class="cotacao form-control input-sm"
+                        	 autofocus="autofocus" readonly="readonly"/>
+                        <br/>
+                        <label>Quantidade</label>
+                        <input required="true" type="number" step="any" min="0" class="quantidade form-control input-sm"
+                        	th:field="*{quantidade}" autofocus="autofocus" placeholder="0,00" maxlength="255"/>
+                        <br/>
+                        <label>Total</label>
+                        <input required="true" type="number" class="total form-control input-sm"
+                        	th:field="*{total}" autofocus="autofocus" placeholder="0,00" readonly="readonly"/>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Vender</button>
+                <a th:href="@{/user/home}" class="btn btn-danger">Cancelar</a>
+            </form>
+        </div>
+        
+
+            <script>
+                $(document).ready(function () {
+                    $.ajax({
+                        url: "https://www.mercadobitcoin.net/api/BTC/ticker/"
+                    }).then(function (data) {
+                        console.log(data.ticker.last);
+                        var valor = data.ticker.last;
+                        $('.cotacao').val(parseFloat(valor).toFixed(2));
+                    });
+                    $('.quantidade').on("change paste keyup", function(){
+					    var total = ($(this).val() * $('.cotacao').val());
+                        $('.total').val(parseFloat(total).toFixed(2));
+					});
+                });
+            </script>
+    </body>
+</html>
