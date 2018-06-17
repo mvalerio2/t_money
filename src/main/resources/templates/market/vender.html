@@ -16,8 +16,8 @@
     <body>
         <div th:replace="fragments/header :: header">Header</div>
         <div class="container">
-            <h2>Compra de Criptomoeda</h2>
-            <form class="form-horizontal" th:object="${ordem}" th:action="@{/market/comprar/save}" method="POST">
+            <h2>Venda de Criptomoeda</h2>
+            <form class="form-horizontal" th:object="${ordem}" th:action="@{/market/vender/save}" method="POST">
                 <div class="form-group">
                     <div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
                         <div th:each="detailedError : ${#fields.detailedErrors()}">
@@ -30,7 +30,7 @@
                         <label>Carteira</label>
 		                <select class="form-control" th:field="*{carteiraId}" required="required">
 		                    <option th:each="carteira : ${carteiras}" th:value="${carteira.id}"
-		                     th:text="${carteira.criptomoedaId.sigla} + ' | Saldo em R$ ' + ${carteira.saldo}"></option>
+		                     th:text="${carteira.criptomoedaId.sigla} + ' | Saldo em ' + ${carteira.criptomoedaId.nome} + ' ' + ${carteira.saldoCriptomoeda}"></option>
 		                </select>
                         <br/>
                         <label>Cotação</label>
@@ -46,7 +46,7 @@
                         	th:field="*{total}" autofocus="autofocus" placeholder="0,00" readonly="readonly"/>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Comprar</button>
+                <button type="submit" class="btn btn-primary">Vender</button>
                 <a th:href="@{/user/home}" class="btn btn-danger">Cancelar</a>
             </form>
         </div>
