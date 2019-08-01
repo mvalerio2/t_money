@@ -13,9 +13,13 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @Entity
 @Table(name = "historico_cotacao")
 public class HistoricoCotacao implements Serializable {

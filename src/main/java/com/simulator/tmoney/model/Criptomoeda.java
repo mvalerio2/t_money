@@ -1,5 +1,6 @@
 package com.simulator.tmoney.model;
 
+import lombok.Data;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
@@ -11,7 +12,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import lombok.Data;
 
 @Data
 @Entity
@@ -40,5 +40,5 @@ public class Criptomoeda implements Serializable {
     
     @OneToMany(mappedBy = "criptomoeda")
     private List<HistoricoCotacao> historicoCotacaoList;
-    
+
 }
