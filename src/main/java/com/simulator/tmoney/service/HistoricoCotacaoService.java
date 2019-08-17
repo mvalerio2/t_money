@@ -20,6 +20,13 @@ public class HistoricoCotacaoService {
     }
 
     /*
+    Lista o historico da cotação com limit 100
+     */
+    public List<HistoricoCotacao> findHistoricoCotacaosTop100(){
+        return historicoCotacaoRepository.findTop100ByOrderByDataHoraDesc();
+    }
+
+    /*
     Carrega um historico de cotação apartir do id
      */
     public HistoricoCotacao findOne(Integer id){

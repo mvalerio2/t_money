@@ -1,6 +1,7 @@
 package com.simulator.tmoney.config;
 
-import com.simulator.tmoney.quartz.ConsultarCriptomoeda;
+import com.simulator.tmoney.jobs.ConsultarCriptomoeda;
+import com.simulator.tmoney.jobs.PingHeroku;
 import org.quartz.CronTrigger;
 import org.quartz.JobDetail;
 import org.quartz.SimpleTrigger;
@@ -43,8 +44,7 @@ public class QuartzConfiguration {
 
 
         factory.setQuartzProperties(quartzProperties());
-        //factory.setTriggers(saidaUsarioSusSemCNSJobTrigger(), inconsistenciaJobTrigger(), processamentoJobTrigger());
-        factory.setTriggers(consultarCriptomoedaJobTrigger());
+        factory.setTriggers(consultarCriptomoedaJobTrigger(), pingHerokuJobTrigger());
 
         return factory;
     }
@@ -74,9 +74,41 @@ public class QuartzConfiguration {
 
         CronTriggerFactoryBean factoryBean = new CronTriggerFactoryBean();
         factoryBean.setJobDetail(consultarCriptomoedaJobDetail());
-        factoryBean.setName("dispensacao-trigger");
+        factoryBean.setName("consultar-criptomoeda-trigger");
         factoryBean.setStartTime(new Date());
-        factoryBean.setCronExpression("0 * * ? * * *");
+        factoryBean.setCronExpression("0 0 * ? * * *");
+        factoryBean.setMisfireInstruction(SimpleTrigger.MISFIRE_INSTRUCTION_FIRE_NOW);
+
+        try {
+            factoryBean.afterPropertiesSet();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        CronTrigger object = factoryBean.getObject();
+
+        return object;
+    }
+
+    private JobDetail pingHerokuJobDetail(){
+        JobDetailFactoryBean factoryBean = new JobDetailFactoryBean();
+
+        factoryBean.setJobClass(PingHeroku.class);
+        factoryBean.setDurability(true);
+        factoryBean.setApplicationContext(context);
+        factoryBean.setName("ping-heroku-job");
+
+        factoryBean.afterPropertiesSet();
+
+        return factoryBean.getObject();
+    }
+
+    private Trigger pingHerokuJobTrigger() {
+
+        CronTriggerFactoryBean factoryBean = new CronTriggerFactoryBean();
+        factoryBean.setJobDetail(pingHerokuJobDetail());
+        factoryBean.setName("ping-heroku-trigger");
+        factoryBean.setStartTime(new Date());
+        factoryBean.setCronExpression("0 0/10 * ? * * *");
         factoryBean.setMisfireInstruction(SimpleTrigger.MISFIRE_INSTRUCTION_FIRE_NOW);
 
         try {

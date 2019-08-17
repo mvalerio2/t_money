@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 
     <head>
-        <title>Listar Carteiras dos Usuários</title>
+        <title>Listar Historico de Cotação</title>
         <meta charset="UTF-8" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="viewport" content="width=device-width" />
@@ -17,36 +17,20 @@
     <body>
         <div th:replace="fragments/header :: header">Header</div>
         <div class="container">
-            <h2>Listar Carteiras dos Usuários</h2>
-            <table class="display" cellspacing="0" width="100%" id="carteiras">
+            <h2>Listar Historico de Cotação</h2>
+            <table class="display" cellspacing="0" width="100%" id="historico">
                 <thead>
                     <tr>
-                        <th>Usuário</th>
                         <th>Criptomoeda</th>
-                        <th>Saldo em R$:</th>
-                        <th>Quantidade de Criptomoeda</th>
-                        <th>Ativo</th>
-                        <th></th>
-                        <th></th>
+                        <th>Valor</th>
+                        <th>Data/Hora</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="carteira : ${carteiras}">
-                        <td th:text="${carteira.usuarioId.nome}"></td>
-                        <td th:text="${carteira.criptomoedaId.nome}"></td>
-                        <td th:text="${carteira.saldo}"></td>
-                        <td th:text="${carteira.saldoCriptomoeda}"></td>
-                        <td th:text="${carteira.ativo}"></td>
-                        <td>
-                            <div >
-                                <a th:if="${carteira.ativo} == true" class="btn btn-danger btn-xs" th:href="@{/admin/carteira/inativar/{id}(id=${carteira.id})}">Inativar Carteira</a>
-                                <a th:if="${carteira.ativo} == false" class="btn btn-primary btn-xs" th:href="@{/admin/carteira/ativar/{id}(id=${carteira.id})}">Ativar Carteira</a>
-                            </div>
-                        </td><td>
-                            <div >
-                                <a class="btn btn-danger btn-xs" th:href="@{/admin/carteira/reiniciar/{id}(id=${carteira.id})}">Reiniciar Carteira</a>
-                            </div>
-                        </td>
+                    <tr th:each="cotacao : ${historicoCotacoes}">
+                        <td th:text="${cotacao.criptomoeda.nome}"></td>
+                        <td th:text="${cotacao.valor}"></td>
+                        <td th:text="${cotacao.dataHora}"></td>
                     </tr>
                 </tbody>
             </table>
@@ -54,7 +38,7 @@
         <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
         <script>
             $(document).ready(function () {
-                $('#carteiras').DataTable({
+                $('#historico').DataTable({
                     "order": [[1, "desc"]],
                     "language": {
                         "sEmptyTable": "Nenhum registro encontrado",

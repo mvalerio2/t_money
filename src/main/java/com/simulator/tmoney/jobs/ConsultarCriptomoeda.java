@@ -1,4 +1,4 @@
-package com.simulator.tmoney.quartz;
+package com.simulator.tmoney.jobs;
 
 
 import com.simulator.tmoney.model.Criptomoeda;
@@ -55,8 +55,10 @@ public class ConsultarCriptomoeda implements Job {
             last = last.replaceAll( "last:" , "" );
             Double valor = Double.parseDouble(last);
 
-            HistoricoCotacao historicoCotacao = HistoricoCotacao.builder().criptomoeda(criptomoeda)
-                    .dataHora(new Date()).valor(valor).build();
+            HistoricoCotacao historicoCotacao = new HistoricoCotacao();
+            historicoCotacao.setCriptomoeda(criptomoeda);
+            historicoCotacao.setDataHora(new Date());
+            historicoCotacao.setValor(valor);
 
             historicoCotacaoService.save(historicoCotacao);
 

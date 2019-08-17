@@ -14,12 +14,12 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @Entity
 @Table(name = "historico_cotacao")
 public class HistoricoCotacao implements Serializable {
@@ -43,5 +43,4 @@ public class HistoricoCotacao implements Serializable {
     @JoinColumn(name = "criptomoeda_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Criptomoeda criptomoeda;
-
 }
