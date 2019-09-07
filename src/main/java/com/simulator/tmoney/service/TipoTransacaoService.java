@@ -1,9 +1,10 @@
 package com.simulator.tmoney.service;
 
-import com.simulator.tmoney.model.Configuracao;
 import com.simulator.tmoney.model.TipoTransacao;
 import com.simulator.tmoney.repository.TipoTransacaoRepository;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,8 +31,8 @@ public class TipoTransacaoService {
     /*
     Carrega o tipo de transação pelo id
      */
-    public TipoTransacao findOne(Integer id) {
-        return tipoTransacaoRepository.findOne(id);
+    public Optional<TipoTransacao> findOne(Integer id) {
+        return tipoTransacaoRepository.findById(id);
     }
 
     /*

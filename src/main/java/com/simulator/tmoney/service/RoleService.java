@@ -3,6 +3,8 @@ package com.simulator.tmoney.service;
 import com.simulator.tmoney.model.Role;
 import com.simulator.tmoney.repository.RoleRepository;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +24,8 @@ public class RoleService {
     /*
     Carrega uma role pelo id
      */
-    public Role findOne(Integer id) {
-        return roleRepository.findOne(id);
+    public Optional<Role> findOne(Integer id) {
+        return roleRepository.findById(id);
     }
 
     /*

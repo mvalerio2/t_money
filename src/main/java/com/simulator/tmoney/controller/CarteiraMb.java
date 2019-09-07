@@ -108,7 +108,7 @@ public class CarteiraMb {
     @GetMapping("/admin/carteira/inativar/{id}")
     public ModelAndView inativar(@PathVariable("id") Integer id) {
 
-        Carteira carteira = carteiraService.findOne(id);
+        Carteira carteira = carteiraService.findOne(id).get();
         carteira.setAtivo(Boolean.FALSE);
         carteiraService.update(carteira);
 
@@ -123,7 +123,7 @@ public class CarteiraMb {
     @GetMapping("/admin/carteira/ativar/{id}")
     public ModelAndView ativar(@PathVariable("id") Integer id) {
 
-        Carteira carteira = carteiraService.findOne(id);
+        Carteira carteira = carteiraService.findOne(id).get();
         carteira.setAtivo(Boolean.TRUE);
         carteiraService.update(carteira);
 
@@ -137,7 +137,7 @@ public class CarteiraMb {
      */
     @GetMapping("/admin/carteira/reiniciar/{id}")
     public ModelAndView reiniciar(@PathVariable("id") Integer id) {
-        Carteira carteira = carteiraService.findOne(id);
+        Carteira carteira = carteiraService.findOne(id).get();
         
         HistoricoTransacao ht = new HistoricoTransacao();
         if(carteira.getSaldo() == null){
@@ -194,7 +194,7 @@ public class CarteiraMb {
 
     @GetMapping("/admin/usuario/{id}")
     public ModelAndView view(@PathVariable("id") Integer id) {
-        Carteira c = carteiraService.findOne(id);
+        Carteira c = carteiraService.findOne(id).get();
         return verUsuario(c);
     }
 }

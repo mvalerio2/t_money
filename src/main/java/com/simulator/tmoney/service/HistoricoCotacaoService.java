@@ -3,6 +3,8 @@ package com.simulator.tmoney.service;
 import com.simulator.tmoney.model.HistoricoCotacao;
 import com.simulator.tmoney.repository.HistoricoCotacaoRepository;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,8 +31,8 @@ public class HistoricoCotacaoService {
     /*
     Carrega um historico de cotação apartir do id
      */
-    public HistoricoCotacao findOne(Integer id){
-        return historicoCotacaoRepository.findOne(id);
+    public Optional<HistoricoCotacao> findOne(Integer id){
+        return historicoCotacaoRepository.findById(id);
     }
 
     /*

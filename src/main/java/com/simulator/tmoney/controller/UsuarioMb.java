@@ -7,6 +7,7 @@ import com.simulator.tmoney.service.CarteiraService;
 import com.simulator.tmoney.service.HistoricoTransacaoService;
 import com.simulator.tmoney.service.UsuarioService;
 import java.util.List;
+import java.util.Optional;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -53,9 +54,9 @@ public class UsuarioMb {
      */
     @PostMapping("/user/editarUsuario/save")
     public ModelAndView save(@Valid Usuario usuario, BindingResult result) {
-        Usuario userOld = usuarioService.findOne(usuario.getId());
-        usuario.setRoles(userOld.getRoles());
-        usuario.setCarteiras(userOld.getCarteiras());
+        Optional<Usuario> userOld = usuarioService.findOne(usuario.getId());
+        usuario.setRoles(userOld.get().getRoles());
+        usuario.setCarteiras(userOld.get().getCarteiras());
 
         usuarioService.update(usuario);
 
@@ -84,7 +85,7 @@ public class UsuarioMb {
     @GetMapping("/user/carteira/deletar/{id}")
     public ModelAndView delete(@PathVariable("id") Integer id) {
 
-        List<HistoricoTransacao> list = historicoTransacaoService.findByCarteiraId(carteiraService.findOne(id));
+        List<HistoricoTransacao> list = historicoTransacaoService.findByCarteiraId(carteiraService.findOne(id).get());
         if(list.isEmpty()){
                 carteiraService.delete(id);
         }
@@ -100,10 +101,10 @@ public class UsuarioMb {
      - Role do usuario logado
     */
     @RequestMapping(value = "/user/historicoTransacoesUsuario", method = RequestMethod.GET)
-    public ModelAndView verHistoricoTransacoes(Carteira carteira) {
+    public ModelAndView verHistoricoTransacoes(Optional<Carteira> carteira) {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        List<HistoricoTransacao> historico = historicoTransacaoService.findByCarteiraId(carteira);
+        List<HistoricoTransacao> historico = historicoTransacaoService.findByCarteiraId(carteira.get());
         Usuario usuario = usuarioService.findByEmail(auth.getName());
         modelAndView.addObject("carteira", carteira);
         modelAndView.addObject("historico", historico);

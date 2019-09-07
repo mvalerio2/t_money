@@ -3,6 +3,8 @@ package com.simulator.tmoney.service;
 import com.simulator.tmoney.model.Criptomoeda;
 import com.simulator.tmoney.repository.CriptomoedaRepository;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +24,8 @@ public class CriptomoedaService {
     /*
     Carrega uma criptomoeda apartir do id
      */
-    public Criptomoeda findOne(Integer id){
-        return criptomoedaRepository.findOne(id);
+    public Optional<Criptomoeda> findOne(Integer id){
+        return criptomoedaRepository.findById(id);
     }
 
     /*

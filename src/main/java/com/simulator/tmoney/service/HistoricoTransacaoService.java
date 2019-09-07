@@ -4,6 +4,8 @@ import com.simulator.tmoney.model.Carteira;
 import com.simulator.tmoney.model.HistoricoTransacao;
 import com.simulator.tmoney.repository.HistoricoTransacaoRepository;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +25,8 @@ public class HistoricoTransacaoService {
     /*
     Carrega um historico apartir do id
      */
-    public HistoricoTransacao findOne(Integer id){
-        return historicoTransacaoRepository.findOne(id);
+    public Optional<HistoricoTransacao> findOne(Integer id){
+        return historicoTransacaoRepository.findById(id);
     }
 
     /*

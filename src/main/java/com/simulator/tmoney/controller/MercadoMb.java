@@ -1,6 +1,7 @@
 package com.simulator.tmoney.controller;
 
 import java.util.Date;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -73,9 +74,9 @@ public class MercadoMb {
      */
     @PostMapping("/market/comprar/save")
     public ModelAndView executarCompra(@Valid Ordem ordem, BindingResult result) {
-        Carteira carteira = carteiraService.findOne(ordem.getCarteiraId());
+        Optional<Carteira> carteira = carteiraService.findOne(ordem.getCarteiraId());
         
-        if (ordem.getTotal() > carteira.getSaldo()) {
+        if (ordem.getTotal() > carteira.get().getSaldo()) {
         	FieldError error = new FieldError("", "total", "Total superior ao saldo disponível em carteira.");
         	result.addError(error);
         } else if (ordem.getQuantidade() <= 0) {
@@ -83,14 +84,14 @@ public class MercadoMb {
         	result.addError(error);
         } else {
 	        Double quantidadeAtualCriptomoeda = ordem.getQuantidade();
-	        Double valorAtualCarteira = carteira.getSaldo() - ordem.getTotal();
+	        Double valorAtualCarteira = carteira.get().getSaldo() - ordem.getTotal();
 	        
-	        HistoricoTransacao historicoTransacao = criarHistoricoTransacao(carteira, quantidadeAtualCriptomoeda, valorAtualCarteira, COMPRA);
+	        HistoricoTransacao historicoTransacao = criarHistoricoTransacao(carteira.get(), quantidadeAtualCriptomoeda, valorAtualCarteira, COMPRA);
 	        
-	        carteira.setSaldo(valorAtualCarteira);
-	        carteira.setSaldoCriptomoeda(quantidadeAtualCriptomoeda);
+	        carteira.get().setSaldo(valorAtualCarteira);
+	        carteira.get().setSaldoCriptomoeda(quantidadeAtualCriptomoeda);
 	        
-	        carteiraService.update(carteira);	        
+	        carteiraService.update(carteira.get());
 
 			historicoTransacaoService.save(historicoTransacao);
         }
@@ -123,24 +124,24 @@ public class MercadoMb {
      */
     @PostMapping("/market/vender/save")
     public ModelAndView executarVenda(@Valid Ordem ordem, BindingResult result) {
-        Carteira carteira = carteiraService.findOne(ordem.getCarteiraId());
+        Optional<Carteira> carteira = carteiraService.findOne(ordem.getCarteiraId());
         
-        if (ordem.getQuantidade() > carteira.getSaldoCriptomoeda()) {
+        if (ordem.getQuantidade() > carteira.get().getSaldoCriptomoeda()) {
         	FieldError error = new FieldError("", "total", "Quantidade superior ao saldo de criptomoeda disponível em carteira.");
         	result.addError(error);
         } else if (ordem.getQuantidade() <= 0) {
         	FieldError error = new FieldError("", "quantidade", "Valor inválido");
         	result.addError(error);
         } else {
-	        Double quantidadeAtualCriptomoeda = carteira.getSaldoCriptomoeda() - ordem.getQuantidade();
-	        Double valorAtualCarteira = carteira.getSaldo() + ordem.getTotal();
+	        Double quantidadeAtualCriptomoeda = carteira.get().getSaldoCriptomoeda() - ordem.getQuantidade();
+	        Double valorAtualCarteira = carteira.get().getSaldo() + ordem.getTotal();
 	        
-	        HistoricoTransacao historicoTransacao = criarHistoricoTransacao(carteira, quantidadeAtualCriptomoeda, valorAtualCarteira, VENDA);
+	        HistoricoTransacao historicoTransacao = criarHistoricoTransacao(carteira.get(), quantidadeAtualCriptomoeda, valorAtualCarteira, VENDA);
 	        
-	        carteira.setSaldo(valorAtualCarteira);
-	        carteira.setSaldoCriptomoeda(quantidadeAtualCriptomoeda);
+	        carteira.get().setSaldo(valorAtualCarteira);
+	        carteira.get().setSaldoCriptomoeda(quantidadeAtualCriptomoeda);
 	        
-	        carteiraService.update(carteira);
+	        carteiraService.update(carteira.get());
 	        
 			historicoTransacaoService.save(historicoTransacao);
         }

@@ -3,6 +3,8 @@ package com.simulator.tmoney.service;
 import com.simulator.tmoney.model.Configuracao;
 import com.simulator.tmoney.repository.ConfiguracaoRepository;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +24,8 @@ public class ConfiguracaoService {
     /*
     Carega uma configuração apartir do id
      */
-    public Configuracao findOne(Integer id) {
-        return configuracaoRepository.findOne(id);
+    public Optional<Configuracao> findOne(Integer id) {
+        return configuracaoRepository.findById(id);
     }
 
     /*

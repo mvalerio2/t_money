@@ -12,13 +12,27 @@
         <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet"></link>
+
+        <style>
+            @media print {
+                #botoes {
+                    display: none;
+                }
+            }
+        </style>
+        <style type="text/css" media="print">
+            @page {
+                size: auto;   /* auto is the initial value */
+                margin: 0;  /* this affects the margin in the printer settings */
+            }
+        </style>
     </head>
 
     <body>
         <div th:replace="fragments/header :: header">Header</div>
         <div class="container">
             <h2>Listar Historico de Cotação</h2>
-            <table class="display" cellspacing="0" width="100%" id="historico">
+            <table class="table" cellspacing="0" width="100%" id="historico">
                 <thead>
                     <tr>
                         <th>Criptomoeda</th>
@@ -38,8 +52,8 @@
         <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
         <script>
             $(document).ready(function () {
-                $('#historico').DataTable({
-                    "order": [[1, "desc"]],
+                $('#transacoes').DataTable({
+                    "paging":         false,
                     "language": {
                         "sEmptyTable": "Nenhum registro encontrado",
                         "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",

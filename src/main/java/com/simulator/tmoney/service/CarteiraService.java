@@ -4,6 +4,8 @@ import com.simulator.tmoney.model.Carteira;
 import com.simulator.tmoney.model.Usuario;
 import com.simulator.tmoney.repository.CarteiraRepository;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +25,8 @@ public class CarteiraService {
     /*
     Carrega a carteira apartir do id
      */
-    public Carteira findOne(Integer id){
-        return carteiraRepository.findOne(id);
+    public Optional<Carteira> findOne(Integer id){
+        return carteiraRepository.findById(id);
     }
 
     /*
@@ -52,6 +54,6 @@ public class CarteiraService {
     Deleta a carteira
      */
     public void delete(Integer id){
-        carteiraRepository.delete(id);
+        carteiraRepository.delete(findOne(id).get());
     }
 }
