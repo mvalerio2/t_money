@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
+import org.springframework.format.annotation.NumberFormat;
 
 @Data
 @Entity
@@ -28,9 +29,11 @@ public class Carteira implements Serializable {
     
     @NotNull
     @Column(name = "saldo")
+    @NumberFormat(pattern = "$###,###.###")
     private Double saldo;
     
     @Column(name = "quantidade_criptomoeda")
+    @NumberFormat(pattern = "$###,###.###")
     private Double saldoCriptomoeda;
     
     @NotNull

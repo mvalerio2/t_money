@@ -30,15 +30,15 @@
                         <label>Carteira</label>
 		                <select class="form-control" th:field="*{carteiraId}" required="required">
 		                    <option th:each="carteira : ${carteiras}" th:value="${carteira.id}"
-		                     th:text="${carteira.criptomoedaId.sigla} + ' | Saldo em ' + ${carteira.criptomoedaId.nome} + ' ' + ${carteira.saldoCriptomoeda}"></option>
+		                     th:text="${carteira.criptomoedaId.sigla} + ' | Saldo em ' + ${carteira.criptomoedaId.nome} + ' ' + ${carteira.saldoCriptomoeda == null ? 0 : carteira.saldoCriptomoeda}"></option>
 		                </select>
                         <br/>
                         <label>Cotação</label>
                         <input required="true" type="number" class="cotacao form-control input-sm"
                         	 autofocus="autofocus" readonly="readonly"/>
                         <br/>
-                        <label>Quantidade</label>
-                        <input required="true" type="number" step="any" min="0" class="quantidade form-control input-sm"
+                        <label>Quantidade </label>
+                        <input required="true" type="number" min="0.00" max="10000.00" step="0.01" class="quantidade form-control input-sm"
                         	th:field="*{quantidade}" autofocus="autofocus" placeholder="0,00" maxlength="255"/>
                         <br/>
                         <label>Total</label>

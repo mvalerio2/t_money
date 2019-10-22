@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>Configuração</title>
+        <meta charset="UTF-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+
+    <body>
+        <div th:replace="fragments/header :: header">Header</div>
+        <div class="container">
+            <h2>Relatorios</h2>
+
+            <form class="form-horizontal" th:action="@{/admin/relatorio/compra}" method="POST" target="_blank">
+                <input class="btn btn-primary btn-lg btn-block" type="submit" value="Relatorio de Compra"/>
+            </form>
+            <br/>
+            <form class="form-horizontal" th:action="@{/admin/relatorio/venda}" method="POST" target="_blank">
+                <input class="btn btn-primary btn-lg btn-block" type="submit" value="Relatorio de Venda"/>
+            </form>
+            <br/>
+            <form class="form-horizontal" th:action="@{/admin/relatorio/rank-compra}" method="POST" target="_blank">
+                <input class="btn btn-primary btn-lg btn-block" type="submit" value="Rank de Compra"/>
+            </form>
+            <br/>
+            <form class="form-horizontal" th:action="@{/admin/relatorio/rank-venda}" method="POST" target="_blank">
+                <input class="btn btn-primary btn-lg btn-block" type="submit" value="Rank de Venda"/>
+            </form>
+
+        </div>
+    </body>
+</html>
